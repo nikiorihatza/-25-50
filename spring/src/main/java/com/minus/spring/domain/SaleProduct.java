@@ -31,10 +31,13 @@ public class SaleProduct {
     private String name;
 
     @NotNull
+    private double prize;
+
+    @NotNull
     private int discount;
 
     @NotNull
-    private double prize;
+    private double discountprize;
 
     @ManyToOne
     @JoinColumn(name = "store_id")
