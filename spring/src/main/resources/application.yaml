@@ -1,4 +1,8 @@
 spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://dbUser:ZrM1Q41R63QjTpvo@data.qbojsn1.mongodb.net/?retryWrites=true&w=majority&appName=Data
+      database: Data
   datasource:
     url: jdbc:h2:mem:reservations
 

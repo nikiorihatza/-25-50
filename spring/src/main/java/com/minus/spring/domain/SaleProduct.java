@@ -27,6 +27,8 @@ public class SaleProduct {
     @NotNull
     private String qr;
 
+    private int quantity;
+
     @NotNull
     private String name;
 

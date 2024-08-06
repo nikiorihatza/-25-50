@@ -20,7 +20,7 @@ public class Store {
     private String name;
 
     @NotNull
-    private int postal;
+    private int postcode;
 
     @NotNull
     private String city;
@@ -35,6 +35,6 @@ public class Store {
     private double longitude;
 
     public String getFullAddress() {
-        return address + ", " + postal + " " + city + ", " + country;
+        return address + ", " + postcode + " " + city + ", " + country;
     }
 }
