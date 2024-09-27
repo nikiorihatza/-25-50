@@ -29,4 +29,6 @@ public record SaleProductController(SaleProductRepository saleProductRepository,
     public ResponseEntity<SaleProduct> getByEAN(@RequestParam String ean) {
         return ResponseEntity.ok(saleProductRepository.findByEan(ean));
     }
+
+
 }
