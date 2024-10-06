@@ -1,7 +1,9 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../domain/store.dart';
+import '../provider/locationProvider.dart';
 
 class HTTPFunc {
   String _apiUrl = 'http://192.168.1.127:8080';
@@ -43,7 +45,7 @@ class HTTPFunc {
 
         stores = storeJsonList.map((json) => Store.fromJson(json)).toList();
 
-        if (RegExp(r'^\d{12,13}$').hasMatch(query)) { // Check if query is a 12 or 13-digit number
+        if (RegExp(r'^\d{12,13}$').hasMatch(query)) {
           final productResponse = await http.get(Uri.parse('$_apiUrl/api/saleproducts/getByEa?ean=$query'));
 
           if (productResponse.statusCode == 200) {
@@ -67,5 +69,25 @@ class HTTPFunc {
 
     return stores;
   }
+
+  Future<List<Store>> fetchNearestStores(LocationProvider locationProvider) async {
+    final Position? position = locationProvider.currentPosition;
+
+    if (position == null) {
+      throw Exception('Location not available');
+    }
+
+    final String currentLocation = '${position.latitude},${position.longitude}';
+
+    final response = await http.get(Uri.parse('$_apiUrl/api/store/giveSortedByNearest?currentLocation=$currentLocation'));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse.map((store) => Store.fromJson(store)).toList();
+    } else {
+      throw Exception('Failed to load stores');
+    }
+  }
+
 }
 
